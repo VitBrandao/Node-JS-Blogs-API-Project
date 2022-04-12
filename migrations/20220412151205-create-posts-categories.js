@@ -9,7 +9,8 @@ module.exports = {
         references: {
           model: 'BlogPosts',
           key: 'id'
-        }
+        },
+        primaryKey: true,
       },
       categoryId: {
         type: Sequelize.INTEGER,
@@ -17,8 +18,9 @@ module.exports = {
         references: {
           model: 'Categories',
           key: 'id'
-        }
-      }
+        },
+        primaryKey: true,
+      },
     });
   },
 
