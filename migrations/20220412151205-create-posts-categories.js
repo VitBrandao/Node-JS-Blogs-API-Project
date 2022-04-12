@@ -6,25 +6,30 @@ module.exports = {
       postId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         references: {
           model: 'BlogPosts',
           key: 'id'
         },
-        primaryKey: true,
+
       },
       categoryId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         references: {
           model: 'Categories',
           key: 'id'
         },
-        primaryKey: true,
       },
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface, _Sequelize) => {
     await queryInterface.dropTable('PostsCategories');
   }
 };
