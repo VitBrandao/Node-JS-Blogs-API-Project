@@ -7,8 +7,9 @@ const verifyEmailSyntax = (email) => {
 
 const doesEmailExists = async (email) => {
   const findEmail = await User.findOne({ where: { email } });
-  if (findEmail) return false;
-  return 'Email does not exists in database';
+  console.log(findEmail);
+  if (!findEmail || findEmail === null) return false;
+  if (findEmail) return true;
 };
 
 const emailValidation = async (email) => {
@@ -17,8 +18,8 @@ const emailValidation = async (email) => {
   const isValid = verifyEmailSyntax(email);
   if (isValid === false) return { message: '"email" must be a valid email' };
 
-  const doesExists = doesEmailExists(email);
-  if (doesExists === false) return { message: 'User already registered' };
+  const doesExists = await doesEmailExists(email);
+  if (doesExists === true) return { message: 'User already registered' };
 
   return 'Email is Valid!';
 };
