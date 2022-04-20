@@ -10,8 +10,8 @@ app.get('/', (request, response) => {
   response.send();
 });
 
-app.use('/user', userController); // Req.1
-app.use('/login', loginController); // Req.2
+app.use('/user', userController); 
+app.use('/login', loginController); 
 
 const PORT = process.env.PORT || 3000;
 

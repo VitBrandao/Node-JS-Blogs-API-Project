@@ -4,6 +4,7 @@ const createToken = require('../auth/createJWT');
 
 const router = express.Router();
 
+// Req.2
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
   try {
