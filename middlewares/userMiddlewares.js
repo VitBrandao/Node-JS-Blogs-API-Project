@@ -7,7 +7,7 @@ const verifyEmailSyntax = (email) => {
 
 const doesEmailExists = async (email) => {
   const findEmail = await User.findOne({ where: { email } });
-  console.log(findEmail);
+
   if (!findEmail || findEmail === null) return false;
   if (findEmail) return true;
 };
