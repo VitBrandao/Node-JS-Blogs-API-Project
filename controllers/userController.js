@@ -31,13 +31,29 @@ router.post('/', async (req, res) => {
 // Req.3
 router.get('/', async (req, res) => {
   const { authorization } = req.headers;
-  // console.log(authorization);
   try {
     const tokenValidation = await validateToken(authorization);
     if (tokenValidation.message) return res.status(401).json(tokenValidation);
 
     const getAllUsers = await User.findAll();
     return res.status(200).json(getAllUsers);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: 'Algo deu errado!' });
+  }
+});
+
+// Req.4
+router.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+  try {
+    const tokenValidation = await validateToken(authorization);
+    if (tokenValidation.message) return res.status(401).json(tokenValidation);
+
+    const getUserById = await User.findByPk(id);
+    if (!getUserById) return res.status(404).json({ message: 'User does not exist' });
+    return res.status(200).json(getUserById);
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ message: 'Algo deu errado!' });
