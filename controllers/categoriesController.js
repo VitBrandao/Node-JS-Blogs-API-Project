@@ -25,4 +25,19 @@ router.post('/', async (req, res) => {
   }
 });
 
+// Req.6
+router.get('/', async (req, res) => {
+  const { authorization } = req.headers;
+  try {
+    const tokenValidation = await validateToken(authorization);
+    if (tokenValidation.message) return res.status(401).json(tokenValidation);
+
+    const allCategories = await Category.findAll();
+    return res.status(200).json(allCategories);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: 'Algo deu errado!' });
+  }
+});
+
 module.exports = router;
