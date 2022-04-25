@@ -7,9 +7,10 @@ const router = express.Router();
 
 // Req.7
 router.post('/', async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content } = req.body; // categoryIds
   const { authorization } = req.headers;
-//   const { dataValues } = req.user;
+  //   const { dataValues } = req.user;
+  // console.log(req.user);
   try {
     const verify = await postServices.postVerifications(req.body);
     if (verify.message) return res.status(400).json(verify);

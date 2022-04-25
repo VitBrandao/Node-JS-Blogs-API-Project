@@ -23,6 +23,7 @@ const categoryIdsValidations = async (categoryIds) => {
 
   categoryIds.map(async (id) => {
     const find = await Category.findOne({ where: id });
+    // console.log(find);
     if (!find || find.length === 0) {
       return { message: '"categoryIds not found' };
     }
