@@ -1,4 +1,5 @@
 const postMiddlewares = require('../middlewares/postMiddlewares');
+const { BlogPost, Category, User } = require('../models');
 
 const postVerifications = async (body) => {
   const { title, content, categoryIds } = body;
@@ -15,6 +16,29 @@ const postVerifications = async (body) => {
   return 'All fields are valid!';
 };
 
+const getAll = async () => {
+  const userFields = ['id', 'displayName', 'email', 'image'];
+  // const categoryFields = ['id', 'name'];
+
+  const findAllPosts = await BlogPost.findAll({
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: userFields,
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+  });
+
+  return findAllPosts;
+};
+
 module.exports = {
   postVerifications,
+  getAll,
 };
