@@ -43,4 +43,21 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Req.9 
+router.get('/:id', async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+  try {
+    const tokenValidation = await validateToken(authorization);
+    if (tokenValidation.message) return res.status(401).json(tokenValidation);
+
+    const getPostById = await postServices.getById(id);
+    if (getPostById.message) return res.status(404).json(getPostById);
+    return res.status(200).json(getPostById);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ message: 'Algo deu errado!' });
+  }
+});
+
 module.exports = router;

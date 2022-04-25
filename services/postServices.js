@@ -18,7 +18,6 @@ const postVerifications = async (body) => {
 
 const getAll = async () => {
   const userFields = ['id', 'displayName', 'email', 'image'];
-  // const categoryFields = ['id', 'name'];
 
   const findAllPosts = await BlogPost.findAll({
     include: [
@@ -38,7 +37,31 @@ const getAll = async () => {
   return findAllPosts;
 };
 
+const getById = async (id) => {
+  const userFields = ['id', 'displayName', 'email', 'image'];
+
+  const findPostById = await BlogPost.findOne({
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: userFields,
+      },
+      {
+        model: Category,
+        as: 'categories',
+        through: { attributes: [] },
+      },
+    ],
+    where: { id },
+  });
+
+  if (!findPostById) return { message: 'Post does not exist' };
+  return findPostById;
+};
+
 module.exports = {
   postVerifications,
   getAll,
+  getById,
 };
